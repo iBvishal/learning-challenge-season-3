@@ -59,3 +59,11 @@ layer_4 = tf.add(tf.matmul(layer_3, weights['w4']), biases['b4'])
 layer_5 = tf.add(tf.matmul(layer_4, weights['w5']), biases['b5'])
 layer_drop = tf.nn.dropout(layer_5, keep_prob)
 output_layer = tf.matmul(layer_5, weights['out']) + biases['out']
+
+# to mimimize the loss we make use of optimization algorithm most common of which is gradient descent optimization
+# here Adam optimizer is used to extend upon gradient descent optimization by using momentum to speedup the process
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(
+        labels=Y, logits=output_layer
+        ))
+train_step = tf.compat.v1.train.AdamOptimizer(1e-4).minimize(cross_entropy)
